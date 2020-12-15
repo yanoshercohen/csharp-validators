@@ -27,14 +27,13 @@ public bool IsValidId(string Id) {
     int[] multiply = new int[9];
     int[] oneDigit = new int[9];
     for (int i = 0; i < 9; i++)
-    multiply[i] = Convert.ToInt32(digits[i].ToString()) * oneTwo[i];
+    multiply[i] = Char.GetNumericValue(digits[i]) * oneTwo[i];
     for (int i = 0; i < 9; i++)
     oneDigit[i] = (int)(multiply[i] / 10) + multiply[i] % 10;
     int sum = 0;
     for (int i = 0; i < 9; i++)
     sum += oneDigit[i];
-    if (sum % 10 == 0) return true;
-    else return false;
+    return sum % 10 == 0;
   }
   catch {
     return false;
@@ -49,12 +48,12 @@ public static bool IsCardNumberValid(string cardNumber) {
 
   // checksum of every other digit starting from right one
   for (i = cardNumber.Length - 1; i >= 0; i -= 2)
-  checkSum += (cardNumber[i] - '0');
+  checkSum += Char.GetNumericValue(cardNumber[i]);
 
   //taking the digits that not included in first checksum, multiple by two,
   // and getting the checksum of resulting digits
   for (i = cardNumber.Length - 2; i >= 0; i -= 2) {
-    int val = ((cardNumber[i] - '0') * 2);
+    int val = (Char.GetNumericValue(cardNumber[i]) * 2);
     while (val > 0) {
       checkSum += (val % 10);
       val /= 10;
